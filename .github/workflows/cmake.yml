@@ -15,14 +15,14 @@ jobs:
     strategy:
       matrix:
         BUILD_TYPE: [Debug, Release]
-        container: ['debian:stretch']  
+        #container: ['debian:stretch']  
         
     env:
       BUILD_TYPE: ${{matrix.BUILD_TYPE}}
       ARTIFACT: DESKTOP_LINUX64@GTest@1.8.0.5dadbab@GNU_9.3.0
                 #D:\repo\DESKTOP_WIN64\GTest\1.8.0.5dadbab\MSVC_19.28.29336.0
                 
-    container: ${{matrix.container}}  #https://www.edwardthomson.com/blog/github_actions_19_downloading_artifacts.html
+    #container: ${{matrix.container}}  #https://www.edwardthomson.com/blog/github_actions_19_downloading_artifacts.html
     #https://stackoverflow.com/questions/60735334/github-continuous-integration-cmake-c
     
     steps:
@@ -36,11 +36,11 @@ jobs:
         path: docker           
 
     - name: Build env image
-      run: docker build --target=env --tag project:env -f ci/docker/ubuntu/Dockerfile . 
-    - name: Build devel image
-      run: docker build --target=devel --tag project:devel -f ci/docker/ubuntu/Dockerfile .
-    - name: Build build image
-      run: docker build --target=build --tag project:build -f ci/docker/ubuntu/Dockerfile .
+      run: docker build --target=env --tag project:env -f docker/DebianStretchBuilder.dockerfile . 
+    #- name: Build devel image
+    #  run: docker build --target=devel --tag project:devel -f docker/DebianStretchBuilder.dockerfile . 
+    #- name: Build build image
+    #  run: docker build --target=build --tag project:build -f docker/DebianStretchBuilder.dockerfile . 
       
     - name: Create Build Environment
       # Some projects don't allow in-source building, so create a separate build directory
