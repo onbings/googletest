@@ -43,20 +43,6 @@ jobs:
     
     - name: Checkout googletest source
       uses: actions/checkout@v2 
-      
-    - name: Debug Docker with a multiline script
-      run: |
-        pwd
-        ls -al /home/runner/work/googletest/googletest
-        uname -a
-        ls -al /home/runner/work/googletest/googletest/build
-        uname -a
-        ls -al /home/runner/work/googletest/googletest/build/Debug
-        uname -a
-        ls -al /home/runner/work/googletest/googletest/build/Debug/install
-        uname -a        
-        ls -al /home/runner/work/googletest/googletest/build/install
-        uname -a
         
     - name: Configure CMake
       # Use a bash shell so we can use the same syntax for environment variable
@@ -75,6 +61,16 @@ jobs:
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
       run: ctest -C $BUILD_TYPE
       
+    - name: Debug Docker with a multiline script
+      run: |
+        pwd
+        ls -al /home/runner/work/googletest/googletest
+        uname -a
+        ls -al /home/runner/work/googletest/googletest/build
+        uname -a
+        ls -al /home/runner/work/googletest/googletest/build/Debug
+        uname -a
+        
     - name: Install
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
