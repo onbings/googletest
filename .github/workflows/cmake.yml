@@ -58,9 +58,13 @@ jobs:
         ls -al ..
         cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE ../..
         ls -al
+        uname -a
+        ls -al ${{github.workspace}}/build//${{env.BUILD_TYPE}}
+        echo ${{github.workspace}}
         
     - name: Build
       shell: bash
+      working-directory: ${{github.workspace}}/build//${{env.BUILD_TYPE}}
       # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: |
         pwd
