@@ -32,8 +32,7 @@ jobs:
         
     container:
       image: onbings/debian_stretch_builder:latest
-      #options: -v /__w/actions-test-repo/actions-test-repo:/zap/wrk/:rw
-      options: -v "/home/runner/work/googletest/googletest":"/github/workspace"
+      #options: -v "/home/runner/work/googletest/googletest":"/github/workspace"
       credentials:
         username: ${{secrets.DOCKER_HUB_USERNAME}}
         password: ${{secrets.DOCKER_HUB_ACCESS_TOKEN}}
@@ -60,6 +59,7 @@ jobs:
 #Not with a container      working-directory: $BUILD_BIN_DIR    #${{github.workspace}}/build//${{env.BUILD_TYPE}}
       run: |
         cmake -E make_directory $BUILD_BIN_DIR
+        cmake -E make_directory $BUILD_BIN_DIR/install
         cd $BUILD_BIN_DIR
         cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE ../..
         
