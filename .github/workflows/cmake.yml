@@ -54,7 +54,8 @@ jobs:
         context: ./
         file: docker/DebianStretchBuilder.dockerfile
         push: true
-        tags: onbings/DebianStretchBuilder:latest
+        tags: onbings/debian_stretch_builder:latest
+        
     - name: Docker Image digest
       run: echo ${{ steps.docker_build.outputs.digest }}     
       
