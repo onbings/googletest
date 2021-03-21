@@ -24,6 +24,7 @@ jobs:
         #container: ['debian:stretch']  
         
     env:
+      BUILD_NAME: googletest
       BUILD_TYPE: ${{matrix.BUILD_TYPE}}
       BUILD_ROOT: /github/workspace
       BUILD_BIN_DIR: /github/workspace/build/${{matrix.BUILD_TYPE}} #can't do this at that level .... BUILD_BIN_DIR: $BUILD_ROOT/build/$BUILD_TYPE
@@ -32,7 +33,8 @@ jobs:
         
     container:
       image: onbings/debian_stretch_builder:latest
-      #options: -v "/home/runner/work/googletest/googletest":"/github/workspace"
+#      options: -v "/home/runner/work/googletest/googletest":"/github/workspace"
+      options: -v "/home/runner/work/" $BUILD_NAME/$BUILD_NAME:"/github/workspace"
       credentials:
         username: ${{secrets.DOCKER_HUB_USERNAME}}
         password: ${{secrets.DOCKER_HUB_ACCESS_TOKEN}}
