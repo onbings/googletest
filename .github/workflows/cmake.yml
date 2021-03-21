@@ -56,7 +56,9 @@ jobs:
         uname -a
         ls -al /home/runner/work/googletest/googletest
         uname -a
-        ls -al ${{env.BLD_CWD}}
+        ls -R ${{env.BLD_CWD}}
+        uname -a
+        tree ${{env.BLD_CWD}}
         
     - name: Configure CMake
       # Use a bash shell so we can use the same syntax for environment variable
