@@ -25,7 +25,6 @@ jobs:
         
     env:
       BUILD_TYPE: ${{matrix.BUILD_TYPE}}
-      BUILD_ROOT_DIR: /home/runner/work/googletest/googletest          #do not use as it contains /__w/googletest/googletest which does not work with container (volume mapping does not seem to work)
       ARTIFACT: DESKTOP_LINUX64@GTest@1.8.0.5dadbab@GNU_6.3.0 #D:\repo\DESKTOP_WIN64\GTest\1.8.0.5dadbab\MSVC_19.28.29336.0
        #container: ${{matrix.container}}  
         
@@ -48,39 +47,38 @@ jobs:
     - name: Debug Docker with a multiline script
       run: |
         pwd
-        echo  $GITHUB_WORKSPACE
-        ls -al  $GITHUB_WORKSPACE
+        ls -al /home/runner/work/googletest/googletest
         uname -a
-        echo ${{env.BUILD_ROOT_DIR}}
-        ls -R ${{env.BUILD_ROOT_DIR}}
+        ls -al /home/runner/work/googletest/googletest/build
+        uname -a
+        ls -al /home/runner/work/googletest/googletest/build/Debug
+        uname -a
+        ls -al /home/runner/work/googletest/googletest/build/Debug/install
+        uname -a        
+        ls -al /home/runner/work/googletest/googletest/build/install
+        uname -a
         
     - name: Configure CMake
       # Use a bash shell so we can use the same syntax for environment variable
       # access regardless of the host operating system
       shell: bash
-      #working-directory: ${{github.workspace}}/build/${{env.BUILD_TYPE}}
-      #working-directory: ${{env.BUILD_ROOT_DIR}}/build/${{env.BUILD_TYPE}}
       run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE
         
     - name: Build
-#      working-directory: ${{github.workspace}}/build/${{env.BUILD_TYPE}}
-      #working-directory:  ${{env.BUILD_ROOT_DIR}}/build/${{env.BUILD_TYPE}}
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: cmake --build . --config $BUILD_TYPE
 
     - name: Test
-      #working-directory: ${{env.BUILD_ROOT_DIR}}/build/${{env.BUILD_TYPE}}
       shell: bash
       # Execute tests defined by the CMake configuration.  
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
       run: ctest -C $BUILD_TYPE
       
     - name: Install
-      working-directory: ${{env.BUILD_ROOT_DIR}}/build/${{env.BUILD_TYPE}}
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
-      run: cmake --install . --config $BUILD_TYPE --prefix ${{env.BUILD_ROOT_DIR}}/build/install    
+      run: cmake --install . --config $BUILD_TYPE --prefix /home/runner/work/googletest/googletest/build/Debug/install  #${{env.BUILD_ROOT_DIR}}/build/install    
           
     - name: Upload Artifact on GitHub
       uses: actions/upload-artifact@v2
