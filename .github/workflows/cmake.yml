@@ -26,7 +26,7 @@ jobs:
     env:
       BUILD_TYPE: ${{matrix.BUILD_TYPE}}
       BUILD_ROOT: /github/workspace
-      BUILD_BIN_DIR: ${{env.BUILD_ROOT}}/build/${{env.BUILD_TYPE}}
+      BUILD_BIN_DIR: $BUILD_ROOT/build/$BUILD_TYPE
       BUILD_ARTIFACT: DESKTOP_LINUX64@GTest@1.8.0.5dadbab@GNU_6.3.0 #D:\repo\DESKTOP_WIN64\GTest\1.8.0.5dadbab\MSVC_19.28.29336.0
        #container: ${{matrix.container}}  
         
