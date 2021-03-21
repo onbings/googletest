@@ -61,7 +61,7 @@ jobs:
         cmake -E make_directory $BUILD_BIN_DIR
         #cmake -E make_directory $BUILD_BIN_DIR/install
         cd $BUILD_BIN_DIR
-        cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE ../..
+        cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_INSTALL_PREFIX=$BUILD_BIN_DIR/install ../..
         
     - name: Build
       shell: bash
@@ -89,7 +89,7 @@ jobs:
       # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: |
         cd $BUILD_BIN_DIR
-        cmake --build . --target install --config $BUILD_TYPE --prefix $BUILD_BIN_DIR/install
+        cmake --build . --target install --config $BUILD_TYPE
         #cmake 3.15 cmake --install . --config $BUILD_TYPE --prefix $BUILD_BIN_DIR/install #${{env.BUILD_ROOT_DIR}}/build/install    
 
     - name: Setup tmate session #https://github.com/mxschmitt/action-tmate
