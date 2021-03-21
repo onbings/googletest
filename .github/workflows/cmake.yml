@@ -13,7 +13,7 @@ jobs:
       matrix:
         BUILD_TYPE: [Debug, Release]
     env:
-      BUILD_TYPE: ${{secrets[matrix.BUILD_TYPE]}}
+      BUILD_TYPE: ${{matrix.BUILD_TYPE}}
   
     steps:
     - uses: actions/checkout@v2
@@ -36,7 +36,7 @@ jobs:
     - name: Debug with a multiline script
       run: |
         echo $BUILD_TYPE
-        ls -al
+        ls -al  ${{github.workspace}}/build//${{env.BUILD_TYPE}}
         
     - name: Build
       working-directory: ${{github.workspace}}/build/${{env.BUILD_TYPE}}
