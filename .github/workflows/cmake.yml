@@ -20,8 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        BUILD_TYPE: [Debug] #, Release]
-        #container: ['debian:stretch']  
+        BUILD_TYPE: [Debug, Release]
         
     env:
       BUILD_TYPE: ${{matrix.BUILD_TYPE}}
