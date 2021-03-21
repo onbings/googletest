@@ -51,20 +51,20 @@ jobs:
         echo  $GITHUB_WORKSPACE
         ls -al  $GITHUB_WORKSPACE
         uname -a
-        echo ${{env.BLD_ROOT_DIR}}
-        ls -R ${{env.BLD_ROOT_DIR}}
+        echo ${{env.BUILD_ROOT_DIR}}
+        ls -R ${{env.BUILD_ROOT_DIR}}
         
     - name: Configure CMake
       # Use a bash shell so we can use the same syntax for environment variable
       # access regardless of the host operating system
       shell: bash
       #working-directory: ${{github.workspace}}/build/${{env.BUILD_TYPE}}
-      working-directory: ${{env.BUILD_ROOT_DIR}}/build/${{env.BUILD_TYPE}}
+      #working-directory: ${{env.BUILD_ROOT_DIR}}/build/${{env.BUILD_TYPE}}
       run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE
         
     - name: Build
 #      working-directory: ${{github.workspace}}/build/${{env.BUILD_TYPE}}
-      working-directory:  ${{env.BUILD_ROOT_DIR}}/build/${{env.BUILD_TYPE}}
+      #working-directory:  ${{env.BUILD_ROOT_DIR}}/build/${{env.BUILD_TYPE}}
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: cmake --build . --config $BUILD_TYPE
