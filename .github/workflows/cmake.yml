@@ -29,11 +29,13 @@ jobs:
       BUILD_TYPE: ${{matrix.BUILD_TYPE}}
       ARTIFACT: DESKTOP_LINUX64@GTest@1.8.0.5dadbab@GNU_6.3.0
                 #D:\repo\DESKTOP_WIN64\GTest\1.8.0.5dadbab\MSVC_19.28.29336.0
-                
+      #with no container BLDCWD: ${{github.workspace}}/build//${{env.BUILD_TYPE}}          
+      BLDCWD: ${{github.workspace}}/build//${{env.BUILD_TYPE}}  
     #container: ${{matrix.container}}  
     container:
       image: onbings/debian_stretch_builder:latest
       #options: -v /__w/actions-test-repo/actions-test-repo:/zap/wrk/:rw
+      options: -v ${{github.workspace}}/build//${{env.BUILD_TYPE}}:/home/runner/work:rw
       credentials:
         username: ${{ secrets.DOCKER_HUB_USERNAME }}
         password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
