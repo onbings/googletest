@@ -31,7 +31,7 @@ jobs:
     container:
       image: onbings/debian_stretch_builder:latest
       #options: -v /__w/actions-test-repo/actions-test-repo:/zap/wrk/:rw
-      options: -v "/home/runner/work/googletest/googletest":"/github/workspace"
+      #options: -v "/home/runner/work/googletest/googletest":"/github/workspace"
       credentials:
         username: ${{secrets.DOCKER_HUB_USERNAME}}
         password: ${{secrets.DOCKER_HUB_ACCESS_TOKEN}}
@@ -50,10 +50,12 @@ jobs:
       # Use a bash shell so we can use the same syntax for environment variable
       # access regardless of the host operating system
       shell: bash
+      working-directory: ${{github.workspace}}/build//${{env.BUILD_TYPE}}
 #      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+   #   run: |
+   #     cmake -E make_directory /github/workspace/build/$BUILD_TYPE
+   #     cd /github/workspace/build/$BUILD_TYPE
       run: |
-        cmake -E make_directory /github/workspace/build/$BUILD_TYPE
-        cd /github/workspace/build/$BUILD_TYPE
         pwd
         ls -al ..
         cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE ../..
@@ -91,7 +93,7 @@ jobs:
     - name: Install
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
-      run: cmake --install --config $BUILD_TYPE --prefix /github/workspace/googletest/build/Debug/install /github/workspace #${{env.BUILD_ROOT_DIR}}/build/install    
+      run: cmake --install . --config $BUILD_TYPE --prefix /github/workspace/googletest/build/Debug/install #${{env.BUILD_ROOT_DIR}}/build/install    
 
     - name: Setup tmate session #https://github.com/mxschmitt/action-tmate
       if: ${{ failure() }}
