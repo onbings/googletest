@@ -75,18 +75,20 @@ jobs:
       # Execute tests defined by the CMake configuration.  
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
       run: |
+        cd $BUILD_BIN_DIR
         ctest -C $BUILD_TYPE
       
-    - name: Debug Docker with a multiline script
-      run: |
-        pwd
-        ls -al /github
+ #   - name: Debug Docker with a multiline script
+ #     run: |
+ #       pwd
+ #       ls -al /github
 
         
     - name: Install
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: |
+        cd $BUILD_BIN_DIR
         cmake --install . --config $BUILD_TYPE --prefix $BUILD_BIN_DIR/install #${{env.BUILD_ROOT_DIR}}/build/install    
 
     - name: Setup tmate session #https://github.com/mxschmitt/action-tmate
