@@ -12,8 +12,6 @@ on:
   pull_request:
   
 jobs:
-
-     
   build-googletest:
     # The CMake configure and build commands are platform agnostic and should work equally
     # well on Windows or Mac.  You can convert this to a matrix build if you need
@@ -49,8 +47,14 @@ jobs:
     
     - name: Checkout googletest source
       uses: actions/checkout@v2 
-
       
+    - name: Debug Docker with a multiline script
+      run: |
+        pwd
+        echo $BLD_CWD
+        ls -al $BLD_CWD
+        uname -a
+        
     - name: Configure CMake
       # Use a bash shell so we can use the same syntax for environment variable
       # access regardless of the host operating system
@@ -58,14 +62,6 @@ jobs:
       #working-directory: ${{github.workspace}}/build//${{env.BUILD_TYPE}}
       working-directory: $BLD_CWD
       run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE
-   
-    - name: Debug Docker with a multiline script
-      run: |
-        pwd
-        echo $BLD_CWD
-        ls -al $BLD_CWD
-        uname -a
-        uname
         
     - name: Build
 #      working-directory: ${{github.workspace}}/build/${{env.BUILD_TYPE}}
