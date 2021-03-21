@@ -2,7 +2,7 @@
 #https://stackoverflow.com/questions/60735334/github-continuous-integration-cmake-c
 #https://dev.to/mihinduranasinghe/using-docker-containers-in-jobs-github-actions-3eof
 
-name: CMake
+name: BuildGoogleTest
 
 on: 
   push:
@@ -38,64 +38,9 @@ jobs:
         password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
         
     steps:
-    - name: First, Checkout googletest source
+    - name: Checkout googletest source
       uses: actions/checkout@v2 
-      
-    - name: Then, Checkout Onbings Docker file into project tree
-      uses: actions/checkout@v2
-      with:
-        repository: onbings/docker
-        path: docker           
-
-    #- name: Build env image
-    #  run: docker build --target=env --tag project:env -f docker/DebianStretchBuilder.dockerfile . 
-    #- name: Build devel image
-    #  run: docker build --target=devel --tag project:devel -f docker/DebianStretchBuilder.dockerfile . 
-    #- name: Build build image
-    #  run: docker build --target=build --tag project:build -f docker/DebianStretchBuilder.dockerfile . 
-    #  #docker run --rm --init -t --name test project:build cmake --build build --target test
-      
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@master      
-      id: buildx
-      #with:
-      #  install: true      
-
-    - name: Build
-      run: |
-        docker build . # will run buildx      
-        
-    - name: Cache Docker layers
-      uses: actions/cache@v2
-      with:
-        path: /tmp/.buildx-cache
-        key: ${{ runner.os }}-buildx-${{ github.sha }}
-        restore-keys: |
-          ${{ runner.os }}-buildx-
-        
-    - name: Login to DockerHub
-      uses: docker/login-action@v1 
-      with:
-        username: ${{ secrets.DOCKER_HUB_USERNAME }}
-        password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-     
-    - name: Build and push docker image
-      id: docker_build
-      uses: docker/build-push-action@v2
-      with:
-        context: ./
-        file: docker/DebianStretchBuilder.dockerfile
-        builder: ${{ steps.buildx.outputs.name }}
-        push: true
-        tags: onbings/debian_stretch_builder:latest
-        cache-from: type=local,src=/tmp/.buildx-cache
-        cache-to: type=local,dest=/tmp/.buildx-cache      
-       
-    - name: Docker Image digest
-      run: echo ${{ steps.docker_build.outputs.digest }}     
-      
-    #- uses: docker://onbings/debianbuilder:latest
-    
+   
     - name: Create Build Environment
       # Some projects don't allow in-source building, so create a separate build directory
       # We'll use this as our working directory for all subsequent commands
@@ -106,10 +51,6 @@ jobs:
       # access regardless of the host operating system
       shell: bash
       working-directory: ${{github.workspace}}/build//${{env.BUILD_TYPE}}
-      # Note the current convention is to use the -S and -B options here to specify source 
-      # and build directories, but this is only available with CMake 3.13 and higher.  
-      # The CMake binaries on the Github Actions machines are (as of this writing) 3.12
-      #un: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE
       run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE
    
     - name: Debug Docker with a multiline script
@@ -137,14 +78,7 @@ jobs:
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: cmake --install . --config $BUILD_TYPE --prefix ${{github.workspace}}/build/install    
-    
-    - name: Debug with a multiline script
-      run: |
-        pwd
-        ls -al
-        uname -a
-        uname
-    #    ls -al ${{github.workspace}}/build/install
+   
           
     - name: Upload Artifact on GitHub
       uses: actions/upload-artifact@v2
