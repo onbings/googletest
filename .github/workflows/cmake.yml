@@ -56,7 +56,7 @@ jobs:
         cd /github/workspace/build/$BUILD_TYPE
         pwd
         ls -al ..
-        cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE ..
+        cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE ../..
         ls -al
         
     - name: Build
