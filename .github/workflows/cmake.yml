@@ -27,7 +27,7 @@ jobs:
       BUILD_TYPE: ${{matrix.BUILD_TYPE}}
       ARTIFACT: DESKTOP_LINUX64@GTest@1.8.0.5dadbab@GNU_6.3.0
                 #D:\repo\DESKTOP_WIN64\GTest\1.8.0.5dadbab\MSVC_19.28.29336.0
-      #with no container BLD_CWD: ${{github.workspace}}/build//$BUILD_TYPE 
+      #with no container BLD_ROOT_DIR: ${{github.workspace}}/build//$BUILD_TYPE 
       #with container 
       BLD_CWD: /home/runner/work
        #container: ${{matrix.container}}  
@@ -54,11 +54,11 @@ jobs:
         echo $BLD_CWD
         ls -al $BLD_CWD
         uname -a
-        ls -al /home/runner/work/googletest/googletest
+        echo ${{github.workspace}}
+        ls -R ${{github.workspace}}
         uname -a
+        echo ${{env.BLD_CWD}}
         ls -R ${{env.BLD_CWD}}
-        uname -a
-        tree ${{env.BLD_CWD}}
         
     - name: Configure CMake
       # Use a bash shell so we can use the same syntax for environment variable
@@ -70,7 +70,7 @@ jobs:
         
     - name: Build
 #      working-directory: ${{github.workspace}}/build/${{env.BUILD_TYPE}}
-      working-directory:  $BLD_CWD/build/${{env.BUILD_TYPE}}
+      working-directory:  ${{env.BLD_CWD}}/build/${{env.BUILD_TYPE}}
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: cmake --build . --config $BUILD_TYPE
