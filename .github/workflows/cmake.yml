@@ -21,17 +21,24 @@ jobs:
     strategy:
       matrix:
         BUILD_TYPE: [Debug, Release]
-        
+        BUILD_TARGET: [DESKTOP_LINUX64, DESKTOP_DEBIAN64]
+        BUILD_TARGET_IMAGE: ["",onbings/debian_stretch_builder:latest]
+        BUILD_TARGET_OPTION: ["", -v "/home/runner/work/googletest/googletest":"/github/workspace"]
     env:
       BUILD_TYPE: ${{matrix.BUILD_TYPE}}
       BUILD_ROOT: /github/workspace
       BUILD_BIN_DIR: /github/workspace/build/${{matrix.BUILD_TYPE}} #can't do this at that level .... BUILD_BIN_DIR: $BUILD_ROOT/build/$BUILD_TYPE
-      BUILD_ARTIFACT: DESKTOP_LINUX64@GTest@1.8.0.5dadbab@GNU_6.3.0 #D:\repo\DESKTOP_WIN64\GTest\1.8.0.5dadbab\MSVC_19.28.29336.0
+      BUILD_PACKAGE_TARGET:  ${{matrix.BUILD_TARGET}} 
+      BUILD_PACKAGE_NAME: GTest
+      BUILD_PACKAGE_VERSION: 1.8.0.5dadbab
+      BUILD_PACKAGE_COMPILER: GNU_6.3.0
+      BUILD_INSTALL_DIR: /github/workspace/build/${{matrix.BUILD_TYPE}}/install/${{matrix.BUILD_TARGET}}/GTest/1.8.0.5dadbab/GNU_6.3.0
+      BUILD_ARTIFACT: ${{matrix.BUILD_TARGET}}@GTest@1.8.0.5dadbab@GNU_6.3.0 #D:\repo\DESKTOP_WIN64\GTest\1.8.0.5dadbab\MSVC_19.28.29336.0
        #container: ${{matrix.container}}  
         
     container:
-      image: onbings/debian_stretch_builder:latest
-      options: -v "/home/runner/work/googletest/googletest":"/github/workspace"
+      image: ${{matrix.BUILD_TARGET_IMAGE}} #onbings/debian_stretch_builder:latest
+      options: ${{matrix.BUILD_TARGET_OPTION}} #-v "/home/runner/work/googletest/googletest":"/github/workspace"
       credentials:
         username: ${{secrets.DOCKER_HUB_USERNAME}}
         password: ${{secrets.DOCKER_HUB_ACCESS_TOKEN}}
@@ -58,9 +65,8 @@ jobs:
 #Not with a container      working-directory: $BUILD_BIN_DIR    #${{github.workspace}}/build//${{env.BUILD_TYPE}}
       run: |
         cmake -E make_directory $BUILD_BIN_DIR
-        #cmake -E make_directory $BUILD_BIN_DIR/install
         cd $BUILD_BIN_DIR
-        cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_INSTALL_PREFIX=$BUILD_BIN_DIR/install ../..
+        cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_INSTALL_PREFIX=$BUILD_INSTALL_DIR ../..
         
     - name: Build
       shell: bash
@@ -81,21 +87,20 @@ jobs:
  #     run: |
  #       pwd
  #       ls -al /github
-
         
     - name: Install
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: |
         cd $BUILD_BIN_DIR
-        cmake --build . --target install --config $BUILD_TYPE
-        #cmake 3.15 cmake --install . --config $BUILD_TYPE --prefix $BUILD_BIN_DIR/install #${{env.BUILD_ROOT_DIR}}/build/install    
+        cmake --build . --target install --config $BUILD_TYPE #-DCMAKE_INSTALL_PREFIX=$BUILD_INSTALL_DIR made above
+        #cmake 3.15 cmake --install . --config $BUILD_TYPE --prefix $BUILD_INSTALL_DIR 
 
     - name: Upload Artifact on GitHub
       uses: actions/upload-artifact@v2
       with: 
           name: ${{env.BUILD_ARTIFACT}}
-          path: ${{env.BUILD_BIN_DIR}}/install # /github/workspace/build/Debug/install #$BUILD_BIN_DIR/install
+          path: ${{env.BUILD_INSTALL_DIR}}
           if-no-files-found: error
           
     - name: Setup tmate session #https://github.com/mxschmitt/action-tmate
