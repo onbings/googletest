@@ -29,14 +29,14 @@ jobs:
       BUILD_TYPE: ${{matrix.BUILD_TYPE}}
       ARTIFACT: DESKTOP_LINUX64@GTest@1.8.0.5dadbab@GNU_6.3.0
                 #D:\repo\DESKTOP_WIN64\GTest\1.8.0.5dadbab\MSVC_19.28.29336.0
-      #with no container BLDCWD: ${{github.workspace}}/build//${{env.BUILD_TYPE}}          
-      BLDCWD: ${{github.workspace}}/build//$BUILD_TYPE  
-    #container: ${{matrix.container}}  
+      #with no container BLD_CWD: ${{github.workspace}}/build//$BUILD_TYPE 
+      #with container 
+      BLD_CWD: /home/runner/work
+       #container: ${{matrix.container}}  
         
     container:
       image: onbings/debian_stretch_builder:latest
       #options: -v /__w/actions-test-repo/actions-test-repo:/zap/wrk/:rw
-      options: -v ${{github.workspace}}/build//$BUILD_TYPE:/home/runner/work:rw
       credentials:
         username: ${{ secrets.DOCKER_HUB_USERNAME }}
         password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
@@ -56,18 +56,20 @@ jobs:
       # access regardless of the host operating system
       shell: bash
       #working-directory: ${{github.workspace}}/build//${{env.BUILD_TYPE}}
-      working-directory: /home/runner/work
+      working-directory: $BLD_CWD
       run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE
    
     - name: Debug Docker with a multiline script
       run: |
         pwd
-        ls -al
+        echo $BLD_CWD
+        ls -al $BLD_CWD
         uname -a
         uname
         
     - name: Build
-      working-directory: ${{github.workspace}}/build/${{env.BUILD_TYPE}}
+#      working-directory: ${{github.workspace}}/build/${{env.BUILD_TYPE}}
+      working-directory:  $BLD_CWD/build/${{env.BUILD_TYPE}}
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: cmake --build . --config $BUILD_TYPE
