@@ -35,7 +35,7 @@ jobs:
     container:
       image: onbings/debian_stretch_builder:latest
       #options: -v /__w/actions-test-repo/actions-test-repo:/zap/wrk/:rw
-      options: -v ${{github.workspace}}/build//${{env.BUILD_TYPE}}:/home/runner/work:rw
+      options: -v ${{github.workspace}}/build/${{env.BUILD_TYPE}}:/home/runner/work:rw
       credentials:
         username: ${{ secrets.DOCKER_HUB_USERNAME }}
         password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
