@@ -75,7 +75,7 @@ jobs:
     - name: Install
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
-      run: cmake --install . --config $BUILD_TYPE #--prefix /home/runner/work/googletest/googletest/build/Debug/install  #${{env.BUILD_ROOT_DIR}}/build/install    
+      run: cmake --install /home/runner/work/googletest/googletest --config $BUILD_TYPE --prefix /home/runner/work/googletest/googletest/build/Debug/install  #${{env.BUILD_ROOT_DIR}}/build/install    
           
     - name: Upload Artifact on GitHub
       uses: actions/upload-artifact@v2
