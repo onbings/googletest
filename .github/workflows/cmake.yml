@@ -95,8 +95,9 @@ jobs:
     - name: Upload Artifact on GitHub
       uses: actions/upload-artifact@v2
       with: 
-          name: ${{env.BUILD_ARTIFACT}}
-          path: $BUILD_BIN_DIR/install
+          name: aa  #${{env.BUILD_ARTIFACT}}
+          path: /github/workspace/build/Debug/install #$BUILD_BIN_DIR/install
+          if-no-files-found: error
           
     - name: Setup tmate session #https://github.com/mxschmitt/action-tmate
       #if: ${{ failure() }}
