@@ -25,8 +25,8 @@ jobs:
         BUILD_TARGET_IMAGE: ["",onbings/debian_stretch_builder:latest]
         BUILD_TARGET_OPTION: ["", -v "/home/runner/work/googletest/googletest":"/github/workspace"]
     env:
-      BUILD_TYPE: ${{matrix.BUILD_TYPE}}
       BUILD_ROOT: /github/workspace
+      BUILD_TYPE: ${{matrix.BUILD_TYPE}}
       BUILD_BIN_DIR: /github/workspace/build/${{matrix.BUILD_TYPE}} #can't do this at that level .... BUILD_BIN_DIR: $BUILD_ROOT/build/$BUILD_TYPE
       BUILD_PACKAGE_TARGET:  ${{matrix.BUILD_TARGET}} 
       BUILD_PACKAGE_NAME: GTest
@@ -50,7 +50,13 @@ jobs:
       shell: bash
       run: |
         echo BUILD_ROOT $BUILD_ROOT
+        echo BUILD_TYPE $BUILD_TYPE
         echo BUILD_BIN_DIR $BUILD_BIN_DIR
+        echo BUILD_PACKAGE_TARGET $BUILD_PACKAGE_TARGET
+        echo BUILD_PACKAGE_NAME $BUILD_PACKAGE_NAME
+        echo BUILD_PACKAGE_VERSION $BUILD_PACKAGE_VERSION
+        echo BUILD_PACKAGE_COMPILER $BUILD_PACKAGE_COMPILER
+        echo BUILD_INSTALL_DIR $BUILD_INSTALL_DIR
         echo BUILD_ARTIFACT $BUILD_ARTIFACT
         #cmake -E make_directory $BUILD_BIN_DIR
           # cmake -E make_directory ${{github.workspace}}/build/$BUILD_TYPE/install
