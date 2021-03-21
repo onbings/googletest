@@ -117,6 +117,9 @@ set(gtest_build_include_dirs
   "${gtest_SOURCE_DIR}")
 include_directories(${gtest_build_include_dirs})
 
+
+message(WARNING "=========ID===========>" ${CMAKE_CXX_COMPILER_ID}_${CMAKE_CXX_COMPILER_VERSION})
+
 ########################################################################
 #
 # Defines the gtest & gtest_main libraries.  User tests should link
