@@ -50,11 +50,13 @@ jobs:
       # Use a bash shell so we can use the same syntax for environment variable
       # access regardless of the host operating system
       shell: bash
-      working-directory: /github/workspace/build/$BUILD_TYPE    #${{github.workspace}}/build//${{env.BUILD_TYPE}}
+#      working-directory: /github/workspace/build/$BUILD_TYPE    #${{github.workspace}}/build//${{env.BUILD_TYPE}}
 #      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE
 #        cmake -E make_directory /github/workspace/build/$BUILD_TYPE
 #        cd /github/workspace/build/$BUILD_TYPE
       run: |
+        pwd
+        cd ${{github.workspace}}/build//${{env.BUILD_TYPE}}
         pwd
         ls -al ..
         cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE ../..
