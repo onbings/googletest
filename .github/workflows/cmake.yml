@@ -44,7 +44,6 @@ jobs:
       # We'll use this as our working directory for all subsequent commands
       shell: bash
       run: |
-        echo ::set-env name=BUILD_BIN_DIR::${{ env.BUILD_ROOT }}/build/$BUILD_TYPE  
         echo BUILD_ROOT $BUILD_ROOT
         echo BUILD_BIN_DIR $BUILD_BIN_DIR
         echo BUILD_ARTIFACT $BUILD_ARTIFACT
