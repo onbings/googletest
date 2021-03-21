@@ -14,7 +14,7 @@ jobs:
         BUILD_TYPE: [Debug, Release]
     env:
       BUILD_TYPE: ${{matrix.BUILD_TYPE}}
-      ARTIFACT: DESKTOP_LINUX64/GTest/1.8.0.5dadbab/GNU_9.3.0
+      ARTIFACT: DESKTOP_LINUX64@GTest@1.8.0.5dadbab@GNU_9.3.0
                 #D:\repo\DESKTOP_WIN64\GTest\1.8.0.5dadbab\MSVC_19.28.29336.0
   
     steps:
