@@ -57,13 +57,13 @@ jobs:
       # Use a bash shell so we can use the same syntax for environment variable
       # access regardless of the host operating system
       shell: bash
-      working-directory: $BUILD_BIN_DIR    #${{github.workspace}}/build//${{env.BUILD_TYPE}}
+#      working-directory: $BUILD_BIN_DIR    #${{github.workspace}}/build//${{env.BUILD_TYPE}}
 #      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE
 #        cmake -E make_directory /github/workspace/build/$BUILD_TYPE
 #        cd /github/workspace/build/$BUILD_TYPE
       run: |
         pwd
-        #cd ${{github.workspace}}/build//${{env.BUILD_TYPE}}
+        cd $BUILD_BIN_DIR
         pwd
         ls -al ..
         cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE ../..
@@ -74,9 +74,11 @@ jobs:
         
     - name: Build
       shell: bash
-      working-directory: ${{github.workspace}}/build//${{env.BUILD_TYPE}}
+      working-directory: $BUILD_BIN_DIR
       # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: |
+        pwd
+        cd $BUILD_BIN_DIR
         pwd
         cmake --build . --config $BUILD_TYPE
 
