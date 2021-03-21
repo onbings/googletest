@@ -66,14 +66,11 @@ jobs:
     - name: Debug Docker with a multiline script
       run: |
         pwd
-        ls -al /__w
+        ls -al /github
         uname -a
-        ls -al /__w/googletest/
+        ls -al /github/workspace
         uname -a
-        ls -al /__w/googletest/googletest/build/
-        uname -a
-        ls -al /__w/googletest/googletest/build/Debug
-        uname -a
+
         
     - name: Install
       shell: bash
