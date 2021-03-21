@@ -65,13 +65,13 @@ jobs:
     - name: Debug Docker with a multiline script
       run: |
         pwd
-        ls -al /home/runner/work/
+        ls -al /__w
         uname -a
-        ls -al /home/runner/work/googletest/
+        ls -al /__w/googletest/
         uname -a
-        ls -al /home/runner/work/googletest/googletest/build/
+        ls -al /__w/googletest/googletest/build/
         uname -a
-        ls -al /home/runner/work/googletest/googletest/build/Debug
+        ls -al /__w/googletest/googletest/build/Debug
         uname -a
         
     - name: Install
