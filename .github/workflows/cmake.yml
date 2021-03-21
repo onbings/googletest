@@ -50,18 +50,7 @@ jobs:
     - name: Checkout googletest source
       uses: actions/checkout@v2 
 
-    - name: Debug Docker with a multiline script
-      run: |
-        pwd
-        uname -a
-        uname
-        echo 1
-        ls -al /home
-        echo 2
-        ls -al ${{github.workspace}}
-        ls -al ${{github.workspace}}/build
-        ls -al ${{github.workspace}}/build/$BUILD_TYPE
-        
+      
     - name: Configure CMake
       # Use a bash shell so we can use the same syntax for environment variable
       # access regardless of the host operating system
