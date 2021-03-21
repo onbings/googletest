@@ -12,11 +12,15 @@ jobs:
     strategy:
       matrix:
         BUILD_TYPE: [Debug, Release]
+        container: ['ubuntu:20.04', 'debian:buster', 'centos:8', 'alpine:3']  
+        
     env:
       BUILD_TYPE: ${{matrix.BUILD_TYPE}}
       ARTIFACT: DESKTOP_LINUX64@GTest@1.8.0.5dadbab@GNU_9.3.0
                 #D:\repo\DESKTOP_WIN64\GTest\1.8.0.5dadbab\MSVC_19.28.29336.0
-  
+                
+    container: ${{matrix.container}}  #https://www.edwardthomson.com/blog/github_actions_19_downloading_artifacts.html
+    
     steps:
     - uses: actions/checkout@v2 
         
