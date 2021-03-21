@@ -41,6 +41,12 @@ jobs:
     #  run: docker build --target=build --tag project:build -f docker/DebianStretchBuilder.dockerfile . 
     #  #docker run --rm --init -t --name test project:build cmake --build build --target test
       
+    - name: Login to DockerHub
+      uses: docker/login-action@v1 
+      with:
+        username: ${{ secrets.DOCKER_HUB_USERNAME }}
+        password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+          
     - uses: docker://onbings/debianbuilder:latest
     
     - name: Create Build Environment
