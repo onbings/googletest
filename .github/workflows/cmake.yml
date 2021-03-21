@@ -51,7 +51,7 @@ jobs:
       # access regardless of the host operating system
       shell: bash
 #      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE
-      run: 
+      run: |
         cmake -E make_directory /github/workspace/build/$BUILD_TYPE
         cd /github/workspace/build/$BUILD_TYPE
         pwd
@@ -62,7 +62,7 @@ jobs:
     - name: Build
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
-      run: 
+      run: |
         pwd
         cmake --build . --config $BUILD_TYPE
 
