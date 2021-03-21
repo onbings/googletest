@@ -31,6 +31,7 @@ jobs:
     container:
       image: onbings/debian_stretch_builder:latest
       #options: -v /__w/actions-test-repo/actions-test-repo:/zap/wrk/:rw
+      options: -v "/home/runner/work/googletest/googletest":"/github/workspace"
       credentials:
         username: ${{secrets.DOCKER_HUB_USERNAME}}
         password: ${{secrets.DOCKER_HUB_ACCESS_TOKEN}}
@@ -40,7 +41,7 @@ jobs:
       # Some projects don't allow in-source building, so create a separate build directory
       # We'll use this as our working directory for all subsequent commands
       run: cmake -E make_directory ${{github.workspace}}/build/$BUILD_TYPE
-           cmake -E make_directory ${{github.workspace}}/build/$BUILD_TYPE/install
+          # cmake -E make_directory ${{github.workspace}}/build/$BUILD_TYPE/install
     
     - name: Checkout googletest source
       uses: actions/checkout@v2 
