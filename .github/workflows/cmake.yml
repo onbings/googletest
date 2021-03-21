@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        BUILD_TYPE: [Debug, Release]
+        BUILD_TYPE: [Debug] #, Release]
         #container: ['debian:stretch']  
         
     env:
@@ -46,8 +46,19 @@ jobs:
       with:
         username: ${{ secrets.DOCKER_HUB_USERNAME }}
         password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-          
-    - uses: docker://onbings/debianbuilder:latest
+     
+    - name: Build and push docker image
+      id: docker_build
+      uses: docker/build-push-action@v2
+      with:
+        context: ./
+        file: docker/DebianStretchBuilder.dockerfile
+        push: true
+        tags: onbings/DebianStretchBuilder:latest
+    - name: Docker Image digest
+      run: echo ${{ steps.docker_build.outputs.digest }}     
+      
+    #- uses: docker://onbings/debianbuilder:latest
     
     - name: Create Build Environment
       # Some projects don't allow in-source building, so create a separate build directory
