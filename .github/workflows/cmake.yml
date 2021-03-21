@@ -70,12 +70,17 @@ jobs:
         uname -a
         ls -al /github/workspace
         uname -a
-
+        ls -al /github/workspace/googletest
+        uname -a
+        ls -al /github/workspace/googletest/build
+        uname -a
+        ls -al /github/workspace/googletest/build/Debug
+        uname -a
         
     - name: Install
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
-      run: cmake --install --config $BUILD_TYPE --prefix /home/runner/work/googletest/googletest/build/Debug/install /home/runner/work/googletest #${{env.BUILD_ROOT_DIR}}/build/install    
+      run: cmake --install --config $BUILD_TYPE --prefix /github/workspace/googletest/build/Debug/install /github/workspace #${{env.BUILD_ROOT_DIR}}/build/install    
 
     - name: Debug Docker with a multiline script
       run: |
