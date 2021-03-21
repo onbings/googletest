@@ -65,9 +65,11 @@ jobs:
     - name: Debug Docker with a multiline script
       run: |
         pwd
-        ls -al /home/runner/work/googletest/googletest
+        ls -al /home/runner/work/
         uname -a
-        ls -al /home/runner/work/googletest/googletest/build
+        ls -al /home/runner/work/googletest/
+        uname -a
+        ls -al /home/runner/work/googletest/googletest/build/
         uname -a
         ls -al /home/runner/work/googletest/googletest/build/Debug
         uname -a
@@ -75,8 +77,14 @@ jobs:
     - name: Install
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
-      run: cmake --install  --config $BUILD_TYPE --prefix /home/runner/work/googletest/googletest/build/Debug/install /home/runner/work/googletest/googletest #${{env.BUILD_ROOT_DIR}}/build/install    
-          
+      run: cmake --install --config $BUILD_TYPE --prefix /home/runner/work/googletest/googletest/build/Debug/install /home/runner/work/googletest #${{env.BUILD_ROOT_DIR}}/build/install    
+
+    - name: Debug Docker with a multiline script
+      run: |
+        pwd
+        ls -al /home/runner/work/googletest/googletest/build/Debug/install
+        uname -a
+        
     - name: Upload Artifact on GitHub
       uses: actions/upload-artifact@v2
       with: 
