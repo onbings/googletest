@@ -92,14 +92,14 @@ jobs:
         cmake --build . --target install --config $BUILD_TYPE
         #cmake 3.15 cmake --install . --config $BUILD_TYPE --prefix $BUILD_BIN_DIR/install #${{env.BUILD_ROOT_DIR}}/build/install    
 
-    - name: Setup tmate session #https://github.com/mxschmitt/action-tmate
-      if: ${{ failure() }}
-      uses: mxschmitt/action-tmate@v3
-      with:
-        sudo: false
-        
     - name: Upload Artifact on GitHub
       uses: actions/upload-artifact@v2
       with: 
           name: ${{env.BUILD_ARTIFACT}}
           path: $BUILD_BIN_DIR/install
+          
+    - name: Setup tmate session #https://github.com/mxschmitt/action-tmate
+      #if: ${{ failure() }}
+      uses: mxschmitt/action-tmate@v3
+      with:
+        sudo: false          
