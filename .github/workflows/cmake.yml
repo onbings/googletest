@@ -44,7 +44,7 @@ jobs:
       # We'll use this as our working directory for all subsequent commands
       shell: bash
       run: |
-        ::set-env name=BUILD_BIN_DIR::${{ env.BUILD_ROOT }}/build/$BUILD_TYPE
+        echo ::set-env name=BUILD_BIN_DIR::${{ env.BUILD_ROOT }}/build/$BUILD_TYPE  
         echo BUILD_ROOT $BUILD_ROOT
         echo BUILD_BIN_DIR $BUILD_BIN_DIR
         echo BUILD_ARTIFACT $BUILD_ARTIFACT
@@ -87,12 +87,6 @@ jobs:
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
       run: ctest -C $BUILD_TYPE
       
-    - name: Setup tmate session #https://github.com/mxschmitt/action-tmate
-      if: ${{ failure() }}
-      uses: mxschmitt/action-tmate@v3
-      with:
-        sudo: false
-        
     - name: Debug Docker with a multiline script
       run: |
         pwd
