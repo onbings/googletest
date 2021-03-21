@@ -47,7 +47,7 @@ jobs:
         echo BUILD_ROOT $BUILD_ROOT
         echo BUILD_BIN_DIR $BUILD_BIN_DIR
         echo BUILD_ARTIFACT $BUILD_ARTIFACT
-        cmake -E make_directory $BUILD_BIN_DIR
+        #cmake -E make_directory $BUILD_BIN_DIR
           # cmake -E make_directory ${{github.workspace}}/build/$BUILD_TYPE/install
     
     - name: Checkout googletest source
@@ -63,6 +63,7 @@ jobs:
 #        cd /github/workspace/build/$BUILD_TYPE
       run: |
         pwd
+        cmake -E make_directory $BUILD_BIN_DIR
         cd $BUILD_BIN_DIR
         pwd
         ls -al ..
