@@ -22,9 +22,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
+        container: ['onbings/debian_stretch_builder:latest']  #, 'ubuntu:latest']
         BUILD_TYPE: [Debug] #[Debug, Release] #[Debug] #
         BUILD_TARGET: [DESKTOP_DEBIAN64] #[DESKTOP_LINUX64]  #[DESKTOP_LINUX64, DESKTOP_DEBIAN64]
-        BUILD_TARGET_IMAGE: ['onbings/debian_stretch_builder:latest']  #[''] 
+        #BUILD_TARGET_IMAGE: ['onbings/debian_stretch_builder:latest']  #[''] 
         #BUILD_TARGET_OPTION: ['-v /home/runner/work:/__w'] 
   
     env:
@@ -37,8 +38,8 @@ jobs:
       BUILD_BIN_DIR:  ${{ github.workspace }}/build/${{matrix.BUILD_TYPE}} #can't do this at that level .... BUILD_BIN_DIR: $BUILD_ROOT/build/$BUILD_TYPE
       BUILD_PACKAGE_TARGET:  ${{matrix.BUILD_TARGET}} 
 
-  #  container:
-  #      image: ${{matrix.BUILD_TARGET_IMAGE}} #onbings/debian_stretch_builder:latest
+    container:
+      image: ${{matrix.container}} #onbings/debian_stretch_builder:latest
   #      options: ${{matrix.BUILD_TARGET_OPTION}} #-v "/home/runner/work/googletest/googletest":"/github/workspace"
   #      credentials:
   #        username: ${{secrets.DOCKER_HUB_USERNAME}}
@@ -50,10 +51,8 @@ jobs:
         
     - name: Docker build or not, set build env to ${{ matrix.BUILD_TARGET_IMAGE }}
       if: ${{ matrix.BUILD_TARGET_IMAGE != '' }}
-      uses: 
-        docker://onbings/debian_stretch_builder:latest #${{ matrix.BUILD_TARGET_IMAGE }}
-      env:
-        BUILD_BIN_DIR:  /__w/googletest/googletest/build/${{matrix.BUILD_TYPE}}
+      uses: docker://onbings/debian_stretch_builder:latest #${{ matrix.BUILD_TARGET_IMAGE }}
+
         
     - name: Configure CMake
       # Use a bash shell so we can use the same syntax for environment variable
