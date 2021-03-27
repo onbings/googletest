@@ -47,9 +47,9 @@ jobs:
     - name: Checkout googletest source
       uses: actions/checkout@v2 
         
-    - name: Docker build or not, set build env to ${{ matrix.BUILD_TARGET_IMAGE }}
-      if: ${{ matrix.BUILD_TARGET_IMAGE != '' }}
-      uses: docker://onbings/debian_stretch_builder:latest #${{ matrix.BUILD_TARGET_IMAGE }}
+ #   - name: Docker build or not, set build env to ${{ matrix.BUILD_TARGET_IMAGE }}
+ #     if: ${{ matrix.BUILD_TARGET_IMAGE != '' }}
+ #     uses: docker://onbings/debian_stretch_builder:latest #${{ matrix.BUILD_TARGET_IMAGE }}
       
     - name: Configure CMake
       # Use a bash shell so we can use the same syntax for environment variable
