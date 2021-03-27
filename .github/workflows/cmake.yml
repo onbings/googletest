@@ -22,8 +22,8 @@ jobs:
       matrix:
         BUILD_TYPE: [Debug] #[Debug, Release]
         BUILD_TARGET: [DESKTOP_LINUX64]  #[DESKTOP_LINUX64, DESKTOP_DEBIAN64]
-        BUILD_TARGET_IMAGE: [""]  #["onbings/debian_stretch_builder:latest"]  #["","onbings/debian_stretch_builder:latest"] 
-        BUILD_TARGET_OPTION: [""] #["-v /home/runner/work/googletest/googletest:/github/workspace"] # ["", "-v /home/runner/work/googletest/googletest:/github/workspace"]
+        BUILD_TARGET_IMAGE: ['']  #["onbings/debian_stretch_builder:latest"]  #["","onbings/debian_stretch_builder:latest"] 
+        BUILD_TARGET_OPTION: [''] #["-v /home/runner/work/googletest/googletest:/github/workspace"] # ["", "-v /home/runner/work/googletest/googletest:/github/workspace"]
     env:
       BUILD_ROOT: /github/workspace
       BUILD_TYPE: ${{matrix.BUILD_TYPE}}
@@ -65,7 +65,7 @@ jobs:
     - name: Checkout googletest source
       uses: actions/checkout@v2 
         
-    - if: ${{ matrix.BUILD_TARGET_IMAGE != "" }}
+    - if: ${{ matrix.BUILD_TARGET_IMAGE != '' }}
       uses: docker://onbings/debian_stretch_builder:latest
       
     - name: Configure CMake
