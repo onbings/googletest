@@ -26,9 +26,9 @@ jobs:
         BUILD_TARGET_OPTION: [''] #["-v /home/runner/work/googletest/googletest:/github/workspace"] # ["", "-v /home/runner/work/googletest/googletest:/github/workspace"]
     env:
       ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true' #to be able to execute echo ::set-env name=  The `set-env` command is disabled. Please upgrade to using Environment Files or opt into unsecure command execution by setting the `ACTIONS_ALLOW_UNSECURE_COMMANDS`
-      #BUILD_ROOT: /github/workspace
+      #BUILD_ROOT: $GITHUB_WORKSPACE
       BUILD_TYPE: ${{matrix.BUILD_TYPE}}
-      BUILD_BIN_DIR: ./build/${{matrix.BUILD_TYPE}} #can't do this at that level .... BUILD_BIN_DIR: $BUILD_ROOT/build/$BUILD_TYPE
+      BUILD_BIN_DIR:  $GITHUB_WORKSPACE/build/${{matrix.BUILD_TYPE}} #can't do this at that level .... BUILD_BIN_DIR: $BUILD_ROOT/build/$BUILD_TYPE
       BUILD_PACKAGE_TARGET:  ${{matrix.BUILD_TARGET}} 
       BUILD_PACKAGE_NAME: GTest
       BUILD_PACKAGE_VERSION: 1.8.0.5dadbab
