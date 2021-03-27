@@ -35,7 +35,7 @@ jobs:
       BUILD_TYPE: ${{matrix.BUILD_TYPE}}
       BUILD_BIN_DIR:  /__w/googletest/googletest/build/${{matrix.BUILD_TYPE}} #${{ github.workspace }}/build/${{matrix.BUILD_TYPE}} #can't do this at that level .... BUILD_BIN_DIR: $BUILD_ROOT/build/$BUILD_TYPE
 #      BUILD_BIN_DIR:  ${{ github.workspace }}/build/${{matrix.BUILD_TYPE}} #can't do this at that level .... BUILD_BIN_DIR: $BUILD_ROOT/build/$BUILD_TYPE
-      BUILD_PACKAGE_TARGET:  ${{matrix.BUILD_TARGET}} 
+      BUILD_PACKAGE_TARGET:  ${{matrix.BUILD_TARGET}}  
 
   #  container:
   #    image: ${{matrix.container}} #onbings/debian_stretch_builder:latest
