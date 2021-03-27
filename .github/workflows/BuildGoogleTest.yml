@@ -24,8 +24,8 @@ jobs:
       matrix:
         BUILD_TYPE: [Debug] #[Debug, Release] #[Debug] #
         BUILD_TARGET: [DESKTOP_DEBIAN64] #[DESKTOP_LINUX64]  #[DESKTOP_LINUX64, DESKTOP_DEBIAN64]
-        BUILD_TARGET_IMAGE: ["onbings/debian_stretch_builder:latest"]  #['']  #["onbings/debian_stretch_builder:latest"]  #["","onbings/debian_stretch_builder:latest"] 
-        BUILD_TARGET_OPTION: [''] #["-v /home/runner/work/googletest/googletest:/github/workspace"] # ["", "-v /home/runner/work/googletest/googletest:/github/workspace"]
+        BUILD_TARGET_IMAGE: ['onbings/debian_stretch_builder:latest']  #[''] 
+        BUILD_TARGET_OPTION: [''] #['-v /home/runner/work/googletest/googletest:/github/workspace'] 
     env:
       ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true' #to be able to execute echo ::set-env name=  The `set-env` command is disabled. Please upgrade to using Environment Files or opt into unsecure command execution by setting the `ACTIONS_ALLOW_UNSECURE_COMMANDS`
       BUILD_PACKAGE_NAME: GTest
