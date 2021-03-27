@@ -83,6 +83,7 @@ jobs:
         pwd 
         uname -a
         echo ::set-env name=BUILD_INSTALL_DIR::${{ env.BUILD_BIN_DIR }}/install/${{matrix.BUILD_TARGET}}/${{ env.BUILD_PACKAGE_NAME }}/${{ env.BUILD_PACKAGE_VERSION }}/${{ env.BUILD_PACKAGE_COMPILER }}
+        echo ::set-env name=BUILD_ARTIFACT::${{ matrix.BUILD_TARGET }}@${{ env.BUILD_PACKAGE_NAME }}@${{ env.BUILD_PACKAGE_VERSION }}@${{ env.BUILD_PACKAGE_COMPILER }}
         cmake -E make_directory $BUILD_BIN_DIR
         cd $BUILD_BIN_DIR
         cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_INSTALL_PREFIX=$BUILD_INSTALL_DIR ../..
@@ -95,8 +96,8 @@ jobs:
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: |
-        echo $BUILD_INSTALL_DIR
         echo ${{ env.BUILD_INSTALL_DIR }}
+        echo ${{ env.BUILD_ARTIFACT }}
         cd $BUILD_BIN_DIR
         cmake --build . --config $BUILD_TYPE
 
@@ -118,8 +119,9 @@ jobs:
       # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: |
         cd $BUILD_BIN_DIR
-        cmake --build . --target install --config $BUILD_TYPE #-DCMAKE_INSTALL_PREFIX=$BUILD_INSTALL_DIR made above
-        #cmake 3.15 cmake --install . --config $BUILD_TYPE --prefix $BUILD_INSTALL_DIR 
+        #cmake --build . --target install --config $BUILD_TYPE #-DCMAKE_INSTALL_PREFIX=$BUILD_INSTALL_DIR made above
+        #cmake 3.15 
+        cmake --install . --config $BUILD_TYPE --prefix $BUILD_INSTALL_DIR 
 
     - name: Upload Artifact on GitHub
       uses: actions/upload-artifact@v2
