@@ -20,10 +20,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        BUILD_TYPE: [Debug, Release]
+        BUILD_TYPE: [Debug] #[Debug, Release]
         BUILD_TARGET: [DESKTOP_DEBIAN64]  #[DESKTOP_LINUX64, DESKTOP_DEBIAN64]
-        BUILD_TARGET_IMAGE: ["onbings/debian_stretch_builder:latest"]  #["","onbings/debian_stretch_builder:latest"] 
-        BUILD_TARGET_OPTION: ["-v /home/runner/work/googletest/googletest:/github/workspace"] # ["", "-v /home/runner/work/googletest/googletest:/github/workspace"]
+        BUILD_TARGET_IMAGE: [""]  #["onbings/debian_stretch_builder:latest"]  #["","onbings/debian_stretch_builder:latest"] 
+        BUILD_TARGET_OPTION: [""] #["-v /home/runner/work/googletest/googletest:/github/workspace"] # ["", "-v /home/runner/work/googletest/googletest:/github/workspace"]
     env:
       BUILD_ROOT: /github/workspace
       BUILD_TYPE: ${{matrix.BUILD_TYPE}}
@@ -36,12 +36,13 @@ jobs:
       BUILD_ARTIFACT: ${{matrix.BUILD_TARGET}}@GTest@1.8.0.5dadbab@GNU_6.3.0 #D:\repo\DESKTOP_WIN64\GTest\1.8.0.5dadbab\MSVC_19.28.29336.0
        #container: ${{matrix.container}}  
         
-    container:
-      image: ${{matrix.BUILD_TARGET_IMAGE}} #onbings/debian_stretch_builder:latest
-      options: ${{matrix.BUILD_TARGET_OPTION}} #-v "/home/runner/work/googletest/googletest":"/github/workspace"
-      credentials:
-        username: ${{secrets.DOCKER_HUB_USERNAME}}
-        password: ${{secrets.DOCKER_HUB_ACCESS_TOKEN}}
+  #  container:
+  #    - if: ${{ matrix.BUILD_TARGET_IMAGE != "" }}
+  #      image: ${{matrix.BUILD_TARGET_IMAGE}} #onbings/debian_stretch_builder:latest
+  #      options: ${{matrix.BUILD_TARGET_OPTION}} #-v "/home/runner/work/googletest/googletest":"/github/workspace"
+  #      credentials:
+  #        username: ${{secrets.DOCKER_HUB_USERNAME}}
+  #        password: ${{secrets.DOCKER_HUB_ACCESS_TOKEN}}
         
     steps:
     - name: Create Build Environment
@@ -64,6 +65,7 @@ jobs:
     - name: Checkout googletest source
       uses: actions/checkout@v2 
         
+    - uses: docker://onbings/debian_stretch_builder:latest
     - name: Configure CMake
       # Use a bash shell so we can use the same syntax for environment variable
       # access regardless of the host operating system
