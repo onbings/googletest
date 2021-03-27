@@ -68,14 +68,14 @@ jobs:
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: |
-        echo "BUILD_PACKAGE_TARGET   ${{ env.BUILD_PACKAGE_TARGET $BUILD_PACKAGE_TARGET }}"
-        echo "BUILD_PACKAGE_NAME     ${{ env.BUILD_PACKAGE_NAME $BUILD_PACKAGE_NAME }}"
-        echo "BUILD_PACKAGE_VERSION  ${{ env.BUILD_PACKAGE_VERSION $BUILD_PACKAGE_VERSION }}"
-        echo "BUILD_PACKAGE_COMPILER ${{ env.BUILD_PACKAGE_COMPILER $BUILD_PACKAGE_COMPILER }}"
-        echo "BUILD_TYPE             ${{ env.BUILD_TYPE $BUILD_TYPE }}"
-        echo "BUILD_BIN_DIR          ${{ env.BUILD_BIN_DIR $BUILD_BIN_DIR }}"
-        echo "BUILD_INSTALL_DIR      ${{ env.BUILD_INSTALL_DIR $BUILD_INSTALL_DIR }}"
-        echo "BUILD_ARTIFACT         ${{ env.BUILD_ARTIFACT $BUILD_ARTIFACT }}"
+        echo "BUILD_PACKAGE_TARGET   $BUILD_PACKAGE_TARGET $BUILD_PACKAGE_TARGET"
+        echo "BUILD_PACKAGE_NAME     $BUILD_PACKAGE_NAME $BUILD_PACKAGE_NAME"
+        echo "BUILD_PACKAGE_VERSION  $BUILD_PACKAGE_VERSION $BUILD_PACKAGE_VERSION"
+        echo "BUILD_PACKAGE_COMPILER $BUILD_PACKAGE_COMPILER $BUILD_PACKAGE_COMPILER"
+        echo "BUILD_TYPE             $BUILD_TYPE $BUILD_TYPE"
+        echo "BUILD_BIN_DIR          $BUILD_BIN_DIR $BUILD_BIN_DIR"
+        echo "BUILD_INSTALL_DIR      $BUILD_INSTALL_DIR $BUILD_INSTALL_DIR"
+        echo "BUILD_ARTIFACT         $BUILD_ARTIFACT $BUILD_ARTIFACT"
         cd ${{ env.BUILD_BIN_DIR }}
         cmake -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }} -DCMAKE_INSTALL_PREFIX=${{ env.BUILD_INSTALL_DIR }} ../..
         cmake --build . --config ${{ env.BUILD_TYPE }}        
