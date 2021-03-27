@@ -68,6 +68,7 @@ jobs:
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: |
+        pwd 
         echo BUILD_PACKAGE_TARGET
         echo BUILD_PACKAGE_TARGET   ${{ env.BUILD_PACKAGE_TARGET $BUILD_PACKAGE_TARGET }}
         echo BUILD_PACKAGE_NAME     ${{ env.BUILD_PACKAGE_NAME $BUILD_PACKAGE_NAME }}
