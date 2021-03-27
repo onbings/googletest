@@ -26,14 +26,6 @@ jobs:
         BUILD_TARGET: [DESKTOP_DEBIAN64] #[DESKTOP_LINUX64]  #[DESKTOP_LINUX64, DESKTOP_DEBIAN64]
         BUILD_TARGET_IMAGE: ['onbings/debian_stretch_builder:latest']  #[''] 
         BUILD_TARGET_OPTION: [''] #['-v /home/runner/work/googletest/googletest:/github/workspace'] 
-        
-    container:
-  #    - if: ${{ matrix.BUILD_TARGET_IMAGE != "" }}
-        image: ${{matrix.BUILD_TARGET_IMAGE}} #onbings/debian_stretch_builder:latest
-#        options: ${{matrix.BUILD_TARGET_OPTION}} #-v "/home/runner/work/googletest/googletest":"/github/workspace"
-  #      credentials:
-  #        username: ${{secrets.DOCKER_HUB_USERNAME}}
-  #        password: ${{secrets.DOCKER_HUB_ACCESS_TOKEN}}
   
     env:
       ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true' #to be able to execute echo ::set-env name=  The `set-env` command is disabled. Please upgrade to using Environment Files or opt into unsecure command execution by setting the `ACTIONS_ALLOW_UNSECURE_COMMANDS`
@@ -41,9 +33,16 @@ jobs:
       BUILD_PACKAGE_VERSION: 1.8.0.5dadbab
       BUILD_PACKAGE_COMPILER: GNU_9.3.0
       BUILD_TYPE: ${{matrix.BUILD_TYPE}}
-      BUILD_BIN_DIR:  ${{ github.workspace }}/build/${{matrix.BUILD_TYPE}} #can't do this at that level .... BUILD_BIN_DIR: $BUILD_ROOT/build/$BUILD_TYPE
+      BUILD_BIN_DIR:  /__w/googletest/googletest/build/${{matrix.BUILD_TYPE}} #${{ github.workspace }}/build/${{matrix.BUILD_TYPE}} #can't do this at that level .... BUILD_BIN_DIR: $BUILD_ROOT/build/$BUILD_TYPE
       BUILD_PACKAGE_TARGET:  ${{matrix.BUILD_TARGET}} 
 
+    container:
+  #    - if: ${{ matrix.BUILD_TARGET_IMAGE != "" }}
+        image: ${{matrix.BUILD_TARGET_IMAGE}} #onbings/debian_stretch_builder:latest
+#        options: ${{matrix.BUILD_TARGET_OPTION}} #-v "/home/runner/work/googletest/googletest":"/github/workspace"
+  #      credentials:
+  #        username: ${{secrets.DOCKER_HUB_USERNAME}}
+  #        password: ${{secrets.DOCKER_HUB_ACCESS_TOKEN}}
         
     steps:
     - name: Checkout googletest source
