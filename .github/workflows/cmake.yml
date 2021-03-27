@@ -25,9 +25,9 @@ jobs:
         BUILD_TARGET_IMAGE: ['']  #["onbings/debian_stretch_builder:latest"]  #["","onbings/debian_stretch_builder:latest"] 
         BUILD_TARGET_OPTION: [''] #["-v /home/runner/work/googletest/googletest:/github/workspace"] # ["", "-v /home/runner/work/googletest/googletest:/github/workspace"]
     env:
-      BUILD_ROOT: /github/workspace
+      #BUILD_ROOT: /github/workspace
       BUILD_TYPE: ${{matrix.BUILD_TYPE}}
-      BUILD_BIN_DIR: /github/workspace/build/${{matrix.BUILD_TYPE}} #can't do this at that level .... BUILD_BIN_DIR: $BUILD_ROOT/build/$BUILD_TYPE
+      BUILD_BIN_DIR: ./build/${{matrix.BUILD_TYPE}} #can't do this at that level .... BUILD_BIN_DIR: $BUILD_ROOT/build/$BUILD_TYPE
       BUILD_PACKAGE_TARGET:  ${{matrix.BUILD_TARGET}} 
       BUILD_PACKAGE_NAME: GTest
       BUILD_PACKAGE_VERSION: 1.8.0.5dadbab
@@ -50,7 +50,7 @@ jobs:
       # We'll use this as our working directory for all subsequent commands
       shell: bash
       run: |
-        echo BUILD_ROOT $BUILD_ROOT
+        #echo BUILD_ROOT $BUILD_ROOT
         echo BUILD_TYPE $BUILD_TYPE
         
         echo BUILD_BIN_DIR $BUILD_BIN_DIR
@@ -66,7 +66,7 @@ jobs:
     - name: Checkout googletest source
       uses: actions/checkout@v2 
         
-    - name: Set build env to ${{ matrix.BUILD_TARGET_IMAGE }}
+    - name: Docker build or not, set build env to ${{ matrix.BUILD_TARGET_IMAGE }}
       if: ${{ matrix.BUILD_TARGET_IMAGE != '' }}
       uses: docker://onbings/debian_stretch_builder:latest
       
@@ -75,8 +75,11 @@ jobs:
       # access regardless of the host operating system
       shell: bash
 #Not with a container      working-directory: $BUILD_BIN_DIR    #${{github.workspace}}/build//${{env.BUILD_TYPE}}
+#Native ubuntu 
+#pwd:       /home/runner/work/googletest/googletest 
+#uname -a:  Linux fv-az163-623 5.4.0-1041-azure #43-Ubuntu SMP Fri Feb 26 10:21:20 UTC 2021 x86_64 x86_64 x86_64 GNU/Linux
       run: |
-        pwd
+        pwd 
         uname -a
         cmake -E make_directory $BUILD_BIN_DIR
         cd $BUILD_BIN_DIR
