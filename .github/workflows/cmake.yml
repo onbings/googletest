@@ -129,7 +129,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with: 
           name: ${{env.BUILD_ARTIFACT}}
-          path: ${{ env.BUILD_BIN_DIR }}/${{env.BUILD_INSTALL_DIR}}
+          path: ${{env.BUILD_INSTALL_DIR}}
           if-no-files-found: error
           
     - name: Setup tmate session #https://github.com/mxschmitt/action-tmate
