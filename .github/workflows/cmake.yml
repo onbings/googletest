@@ -82,7 +82,7 @@ jobs:
       run: |
         pwd 
         uname -a
-        echo ::set-env name=BUILD_INSTALL_DIR::${{ env.BUILD_BIN_DIR }}/install/${{matrix.BUILD_TARGET}}/${{ env.BUILD_PACKAGE_NAME }}/${{ env.BUILD_PACKAGE_VERSION }}/${{ env.BUILD_PACKAGE_COMPILER }}
+        echo ::set-env name=BUILD_INSTALL_DIR::./install/${{matrix.BUILD_TARGET}}/${{ env.BUILD_PACKAGE_NAME }}/${{ env.BUILD_PACKAGE_VERSION }}/${{ env.BUILD_PACKAGE_COMPILER }}
         echo ::set-env name=BUILD_ARTIFACT::${{ matrix.BUILD_TARGET }}@${{ env.BUILD_PACKAGE_NAME }}@${{ env.BUILD_PACKAGE_VERSION }}@${{ env.BUILD_PACKAGE_COMPILER }}
         cmake -E make_directory $BUILD_BIN_DIR
  #       cd $BUILD_BIN_DIR
@@ -99,7 +99,7 @@ jobs:
         echo ${{ env.BUILD_BIN_DIR }}
         echo ${{ env.BUILD_TYPE }}
         echo ${{ env.BUILD_INSTALL_DIR }}
-        #cd ${{ env.BUILD_BIN_DIR }}
+        cd ${{ env.BUILD_BIN_DIR }}
         cmake -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }} -DCMAKE_INSTALL_PREFIX=${{ env.BUILD_INSTALL_DIR }} ../..
         cmake --build . --config ${{ env.BUILD_TYPE }}
 
