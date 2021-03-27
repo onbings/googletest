@@ -69,7 +69,7 @@ jobs:
         cmake -E make_directory $BUILD_BIN_DIR
         
     - name: Build
-      shell: bash
+      shell: cmd
       # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: |
         echo "BUILD_PACKAGE_TARGET   $BUILD_PACKAGE_TARGET"
