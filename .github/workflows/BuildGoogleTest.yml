@@ -52,6 +52,7 @@ jobs:
       uses: docker://onbings/debian_stretch_builder:latest #${{ matrix.BUILD_TARGET_IMAGE }}
       
     - name: Configure CMake
+      uses: docker://onbings/debian_stretch_builder:latest #${{ matrix.BUILD_TARGET_IMAGE }}
       # Use a bash shell so we can use the same syntax for environment variable
       # access regardless of the host operating system
       shell: bash
@@ -63,7 +64,7 @@ jobs:
         pwd 
         uname -a
         echo ::set-env name=BUILD_INSTALL_DIR::${{ env.BUILD_BIN_DIR }}/install/${{matrix.BUILD_TARGET}}/${{ env.BUILD_PACKAGE_NAME }}/${{ env.BUILD_PACKAGE_VERSION }}/${{ env.BUILD_PACKAGE_COMPILER }}
-        echo ::set-env name=BUILD_UPLOAD_PATH::${{ env.BUILD_BIN_DIR }}/install/bha22
+        echo ::set-env name=BUILD_UPLOAD_PATH::${{ env.BUILD_BIN_DIR }}/install
         echo ::set-env name=BUILD_ARTIFACT::${{ matrix.BUILD_TARGET }}@${{ env.BUILD_PACKAGE_NAME }}@${{ env.BUILD_PACKAGE_VERSION }}@${{ env.BUILD_PACKAGE_COMPILER }}
         cmake -E make_directory $BUILD_BIN_DIR
         
