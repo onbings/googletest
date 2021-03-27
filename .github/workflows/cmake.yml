@@ -32,8 +32,8 @@ jobs:
       BUILD_PACKAGE_NAME: GTest
       BUILD_PACKAGE_VERSION: 1.8.0.5dadbab
       BUILD_PACKAGE_COMPILER: GNU_6.3.0
-      BUILD_INSTALL_DIR: /github/workspace/build/${{matrix.BUILD_TYPE}}/install/${{matrix.BUILD_TARGET}}/GTest/1.8.0.5dadbab/GNU_6.3.0
-      BUILD_ARTIFACT: ${{matrix.BUILD_TARGET}}@GTest@1.8.0.5dadbab@GNU_6.3.0 #D:\repo\DESKTOP_WIN64\GTest\1.8.0.5dadbab\MSVC_19.28.29336.0
+ #     BUILD_INSTALL_DIR: /github/workspace/build/${{matrix.BUILD_TYPE}}/install/${{matrix.BUILD_TARGET}}/GTest/1.8.0.5dadbab/GNU_6.3.0
+ #     BUILD_ARTIFACT: ${{matrix.BUILD_TARGET}}@GTest@1.8.0.5dadbab@GNU_6.3.0 #D:\repo\DESKTOP_WIN64\GTest\1.8.0.5dadbab\MSVC_19.28.29336.0
        #container: ${{matrix.container}}  
         
   #  container:
@@ -81,14 +81,21 @@ jobs:
       run: |
         pwd 
         uname -a
+        echo ::set-env name=BUILD_INSTALL_DIR::${{ env.BUILD_BIN_DIR }}/install/${{matrix.BUILD_TARGET}}/${{ env.BUILD_PACKAGE_NAME }}/${{ env.BUILD_PACKAGE_VERSION }}/${{ env.BUILD_PACKAGE_COMPILER }}
         cmake -E make_directory $BUILD_BIN_DIR
         cd $BUILD_BIN_DIR
         cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_INSTALL_PREFIX=$BUILD_INSTALL_DIR ../..
+        echo $BUILD_INSTALL_DIR
+        echo ${{ env.BUILD_INSTALL_DIR }}       
+ #     BUILD_INSTALL_DIR: /github/workspace/build/${{matrix.BUILD_TYPE}}/install/${{matrix.BUILD_TARGET}}/GTest/1.8.0.5dadbab/GNU_6.3.0
+ #     BUILD_ARTIFACT: ${{matrix.BUILD_TARGET}}@GTest@1.8.0.5dadbab@GNU_6.3.0 #D:\repo\DESKTOP_WIN64\GTest\1.8.0.5dadbab\MSVC_19.28.29336.0
         
     - name: Build
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: |
+        echo $BUILD_INSTALL_DIR
+        echo ${{ env.BUILD_INSTALL_DIR }}
         cd $BUILD_BIN_DIR
         cmake --build . --config $BUILD_TYPE
 
