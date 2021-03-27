@@ -17,18 +17,18 @@ jobs:
     # well on Windows or Mac.  You can convert this to a matrix build if you need
     # cross-platform coverage.
     # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
-    runs-on: ubuntu-latest
+    runs-on:  windows-latest #ubuntu-latest
     strategy:
       matrix:
-        BUILD_TYPE: [Debug, Release] #[Debug] #
-        BUILD_TARGET: [DESKTOP_LINUX64]  #[DESKTOP_LINUX64, DESKTOP_DEBIAN64]
+        BUILD_TYPE: [Debug] #[Debug, Release] #[Debug] #
+        BUILD_TARGET: [DESKTOP_WIN64]  #[DESKTOP_LINUX64, DESKTOP_DEBIAN64]
         BUILD_TARGET_IMAGE: ['']  #["onbings/debian_stretch_builder:latest"]  #["","onbings/debian_stretch_builder:latest"] 
         BUILD_TARGET_OPTION: [''] #["-v /home/runner/work/googletest/googletest:/github/workspace"] # ["", "-v /home/runner/work/googletest/googletest:/github/workspace"]
     env:
       ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true' #to be able to execute echo ::set-env name=  The `set-env` command is disabled. Please upgrade to using Environment Files or opt into unsecure command execution by setting the `ACTIONS_ALLOW_UNSECURE_COMMANDS`
       BUILD_PACKAGE_NAME: GTest
       BUILD_PACKAGE_VERSION: 1.8.0.5dadbab
-      BUILD_PACKAGE_COMPILER: GNU_9.3.0
+      BUILD_PACKAGE_COMPILER: MSVC_19.28.29336.0 # GNU_9.3.0
       BUILD_TYPE: ${{matrix.BUILD_TYPE}}
       BUILD_BIN_DIR:  ${{ github.workspace }}/build/${{matrix.BUILD_TYPE}} #can't do this at that level .... BUILD_BIN_DIR: $BUILD_ROOT/build/$BUILD_TYPE
       BUILD_PACKAGE_TARGET:  ${{matrix.BUILD_TARGET}} 
@@ -61,7 +61,7 @@ jobs:
         pwd 
         uname -a
         echo ::set-env name=BUILD_INSTALL_DIR::${{ env.BUILD_BIN_DIR }}/install/${{matrix.BUILD_TARGET}}/${{ env.BUILD_PACKAGE_NAME }}/${{ env.BUILD_PACKAGE_VERSION }}/${{ env.BUILD_PACKAGE_COMPILER }}
-        echo ::set-env name=BUILD_UPLOAD_PATH::${{ env.BUILD_BIN_DIR }}/install/${{matrix.BUILD_TARGET}}
+        echo ::set-env name=BUILD_UPLOAD_PATH::${{ env.BUILD_BIN_DIR }}/install
         echo ::set-env name=BUILD_ARTIFACT::${{ matrix.BUILD_TARGET }}@${{ env.BUILD_PACKAGE_NAME }}@${{ env.BUILD_PACKAGE_VERSION }}@${{ env.BUILD_PACKAGE_COMPILER }}
         cmake -E make_directory $BUILD_BIN_DIR
         
