@@ -28,7 +28,7 @@ jobs:
       ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true' #to be able to execute echo ::set-env name=  The `set-env` command is disabled. Please upgrade to using Environment Files or opt into unsecure command execution by setting the `ACTIONS_ALLOW_UNSECURE_COMMANDS`
       BUILD_PACKAGE_NAME: GTest
       BUILD_PACKAGE_VERSION: 1.8.0.5dadbab
-      BUILD_PACKAGE_COMPILER: GNU_6.3.0
+      BUILD_PACKAGE_COMPILER: GNU_9.3.0
       BUILD_TYPE: ${{matrix.BUILD_TYPE}}
       BUILD_BIN_DIR:  ${{ github.workspace }}/build/${{matrix.BUILD_TYPE}} #can't do this at that level .... BUILD_BIN_DIR: $BUILD_ROOT/build/$BUILD_TYPE
       BUILD_PACKAGE_TARGET:  ${{matrix.BUILD_TARGET}} 
@@ -68,19 +68,17 @@ jobs:
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: |
-        echo "BUILD_PACKAGE_TARGET   $BUILD_PACKAGE_TARGET $BUILD_PACKAGE_TARGET"
-        echo "BUILD_PACKAGE_NAME     $BUILD_PACKAGE_NAME $BUILD_PACKAGE_NAME"
-        echo "BUILD_PACKAGE_VERSION  $BUILD_PACKAGE_VERSION $BUILD_PACKAGE_VERSION"
-        echo "BUILD_PACKAGE_COMPILER $BUILD_PACKAGE_COMPILER $BUILD_PACKAGE_COMPILER"
-        echo "BUILD_TYPE             $BUILD_TYPE $BUILD_TYPE"
-        echo "BUILD_BIN_DIR          $BUILD_BIN_DIR $BUILD_BIN_DIR"
-        echo "BUILD_INSTALL_DIR      $BUILD_INSTALL_DIR $BUILD_INSTALL_DIR"
-        echo "BUILD_ARTIFACT         $BUILD_ARTIFACT $BUILD_ARTIFACT"
+        echo "BUILD_PACKAGE_TARGET   $BUILD_PACKAGE_TARGET"
+        echo "BUILD_PACKAGE_NAME     $BUILD_PACKAGE_NAME"
+        echo "BUILD_PACKAGE_VERSION  $BUILD_PACKAGE_VERSION"
+        echo "BUILD_PACKAGE_COMPILER $BUILD_PACKAGE_COMPILER"
+        echo "BUILD_TYPE             $BUILD_TYPE"
+        echo "BUILD_BIN_DIR          $BUILD_BIN_DIR"
+        echo "BUILD_INSTALL_DIR      $BUILD_INSTALL_DIR"
+        echo "BUILD_ARTIFACT         $BUILD_ARTIFACT"
         cd ${{ env.BUILD_BIN_DIR }}
         cmake -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }} -DCMAKE_INSTALL_PREFIX=${{ env.BUILD_INSTALL_DIR }} ../..
         cmake --build . --config ${{ env.BUILD_TYPE }}        
-
-
 
     - name: Test
       shell: bash
